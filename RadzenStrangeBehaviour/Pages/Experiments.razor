@@ -1,0 +1,9 @@
+﻿@page "/experiments"
+@using System.Linq.Dynamic.Core
+
+<h3>Experiments</h3>
+
+<RadzenDropDownDataGrid TValue="string" LoadData="@LoadData" AllowFiltering="true" AllowClear="true" AllowSorting="false" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                        Data=@employees Count="@count" TextProperty="Name" ValueProperty="Name"
+/>
+
