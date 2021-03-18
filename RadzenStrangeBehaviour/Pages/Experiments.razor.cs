@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Radzen;
+using RadzenStrangeBehaviour.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace RadzenStrangeBehaviour.Pages
     {
         [Inject] private UserManager<IdentityUser> _userManager { get; set; }
         [Inject] private IHttpContextAccessor _httpCtx { get; set; }        
+        [Inject] private ApplicationDbContext _ctx { get; set; }
         string UserId => _httpCtx.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
 
         public class Emp
@@ -45,9 +48,12 @@ namespace RadzenStrangeBehaviour.Pages
         {
             var userId = UserId;
             var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
-            
+
             var isAdmin = await _userManager.IsInRoleAsync(user, "admin"); // when you start filtering the app hangs here
             //var isAdmin = AsyncHelper.RunSync<bool>(() =>    _userManager.IsInRoleAsync(user, "admin") );
+
+            //var someRole = await _ctx.Roles.FirstAsync().ConfigureAwait;
+            //var someRole = await _ctx.Roles.FirstAsync().ConfigureAwait;
             var q = query.AsQueryable();
             if (!string.IsNullOrEmpty(args.Filter))
             {
